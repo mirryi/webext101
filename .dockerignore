@@ -1,0 +1,10 @@
+*
+
+!include
+!sections
+!listings
+!index.tex
+
+!latexmkrc
+
+!packages.txt
