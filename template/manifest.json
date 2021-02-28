@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Name of your extension",
+  "description": "Description of your extension's functionality",
+  "homepage_url": "URL to your extension's homepage or perhaps source code repository",
+  "version": "Current version",
+  "icons": {},
+  "content_scripts": [
+    {
+      "matches": [],
+      "js": ["js/index.js"]
+    }
+  ]
+}

@@ -2,8 +2,8 @@
 /local
 */renv
 
-# Knitted files
-*.Rnw_tex
+# Node ignores
+node_modules
 
 # Prerequisites
 *.d

@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+  "name": "Emoji Substitution",
+  "description": "Replaces words with emojis.",
+  "homepage_url": "https://github.com/Dophin2009/webext101/blob/master/emojisub",
+  "version": "Current version",
+  "icons": {
+    "48": "icons/icon.png",
+    "96": "icons/icon@2x.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/index.js"]
+    }
+  ]
+}
