@@ -1,15 +1,6 @@
-= Beamer Project Framework
+= WebExtensions 101
 
-Beamer project template using Metropolis theme.
-
-== Features
-
-* Multiple build methods
-** Using the system TeX installation
-** Using TinyTeX
-** Using Docker
-* GitHub action to build the PDF on push
-* Decent file organization
+A tiny workshop in creating a very small browser extension.
 
 == Building
 
