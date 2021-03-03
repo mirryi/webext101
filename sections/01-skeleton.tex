@@ -93,7 +93,8 @@
 \end{frame}
 
 \begin{frame}[fragile]{\currenttitle}
-  Define the content scripts:
+  Define the content scripts (which are loaded in the order they are
+  specified):
   \lstinputlisting[language=json,firstline=10,lastline=15]{\emojisubdir/manifest.json}
 
   We'll start with using \texttt{index.js}, but \texttt{emojimap.js} will be
@@ -193,7 +194,7 @@
 
 % ---------------------------
 \renewcommand{\currenttitle}{Let's retest}
-\begin{frame}{\currenttitle}
+\begin{frame}[fragile]{\currenttitle}
   \textbf{Firefox}:
   \begin{enumerate}
     \item Click "Reload" in the bottom right corner of the extension card
@@ -208,7 +209,7 @@
 
 % ---------------------------
 \renewcommand{\currenttitle}{Background scripts}
-\begin{frame}{\currenttitle}
+\begin{frame}[fragile]{\currenttitle}
   \textbf{Background scripts}\footnotemark{} are loaded as soon as the extension is loaded and can be
   used to maintain persistent state. \\[1em]
 
@@ -219,7 +220,22 @@
     \item \textbf{cannot} access the content of web pages
   \end{itemize}
 
-  \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Anatomy_of_a_WebExtension#background_scripts}}
+  \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Anatomy_of_a_WebExtension\#background_scripts}}
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  We use the "background" key in \texttt{manifest.json} to load background
+  script files in order:
+  \begin{lstlisting}[language=json]
+{
+  ...
+  "background": {
+    "scripts": ["bg-1.js", "bg-2.js", ...]
+  },
+  ...
+}
+  \end{lstlisting}
 \end{frame}
 
 % ---------------------------

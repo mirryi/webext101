@@ -1,0 +1,135 @@
+% -----------------------------------------------
+% chktex-file 44
+\documentclass[../index.tex]{subfiles}
+
+% -----------------------------------------------
+
+\begin{document}
+
+% -----------------------------------------------
+
+\renewcommand{\sectiontitle}{More advanced tooling}
+\section{\sectiontitle}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Using external libraries}
+\begin{frame}[fragile]{\currenttitle}
+  You may want to pull in external libraries into your extension. \\[1em]
+
+  In the JS world, you have many (too many) options:
+  \begin{itemize}
+    \item Store a copy of the library in your extension
+    \item Use a CDN
+    \item Use a package manager to download the library
+    \item Use a package manager + bundler
+  \end{itemize}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Storing a copy of the library}
+\begin{frame}[fragile]{\currenttitle}
+  Let's say we want to use the jQuery library:
+
+  \begin{enumerate}
+    \item Download\footnote{https://code.jquery.com/jquery-3.6.0.min.js} into
+          your project
+    \item Load the file in the necessary places
+  \end{enumerate}
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  To use in content scripts, we just have to add it to our
+  \texttt{manifest.json}:
+
+  \begin{lstlisting}[language=ES6]
+{
+  ...
+  "content_scripts": [
+    {
+      "matches": [...],
+      "js": ["jquery-3.6.0.min.js", ...]
+    }
+  ],
+  ...
+}
+  \end{lstlisting}
+
+  The jQuery global (\texttt{\$}) is now available in all content scripts.
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  To use in a background scripts, we can do the same thing:
+
+  \begin{lstlisting}[language=ES6]
+{
+  ...
+  "background": [
+    "scripts": ["jquery-3.6.0.min.js", ...]
+  ],
+  ...
+}
+  \end{lstlisting}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Using a package manager}
+\begin{frame}[fragile]{\currenttitle}
+  We can use the Node Package Manager (npm) that comes with Node.js to install
+  jQuery:
+
+  \begin{lstlisting}[language=Bash,basicstyle=\ttfamily\small]
+    npm install jquery
+  \end{lstlisting}
+
+  \vspace*{1em}
+  This will create a \texttt{node\_modules} in your project directory.
+
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  We can now load jQuery from inside \texttt{/node\_modules}:
+
+  \begin{lstlisting}[language=json]
+{
+  ...
+  "content_scripts": [
+    {
+      "matches": [...],
+      "js": ["node_modules/jquery/dist/jquery.js", ...]
+    }
+  ]
+  ...
+}
+  \end{lstlisting}
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  The npm registry (\url{npmjs.com}) has \textit{millions} of
+  packages/libraries available for use. \\[2em]
+
+  \textbf{Beware: Using npm is no different from downloading random crap off
+  the internet.}
+
+  \textbf{The JS package ecosystem is ripe with security issues.}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Using a package manager + bundler}
+\begin{frame}[fragile]{\currenttitle}
+  Modern web practices typically involve using a \textbf{bundler} such as
+  Webpack or Parcel to combine all your assets into one or multiple JS files.
+  \\[1em]
+
+  This means that there will be an extra compilation step between writing code
+  and testing your extension. \\[3em]
+
+  Let me know if you're interested in exploring this.
+\end{frame}
+
+% -----------------------------------------------
+
+\end{document}

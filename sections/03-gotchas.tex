@@ -102,12 +102,23 @@ setCookie.then(logCookie, logError);
   \begin{itemize}
     \item Some browsers may not support certain keys\footnotemark{} (e.g. Edge does not
           support \texttt{commands} key)
-          \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json#browser_compatibility}}
+          \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json\#browser_compatibility}}
     \item Some browsers may require some settings in the \texttt{"browser\_specific\_settings"} field
   \end{itemize}
 
   \vspace*{1em}
   \textbf{Solution}: Reading Is Fundamental
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Gotcha \#3: JavaScript is an\ldots{} interesting language}
+\begin{frame}[fragile]{\currenttitle}
+  JavaScript is not a very well-designed language, and many unexpected things may happen\footnotemark{}. \\[2em]
+
+  \textbf{Solution}: Be very meticulous \\[1em]
+  \textbf{Better solution}: Use Typescript and strict lints
+
+  \footnotetext{\scriptsize \url{https://www.codeproject.com/articles/182416/a-collection-of-javascript-gotchas}}
 \end{frame}
 
 % -----------------------------------------------
