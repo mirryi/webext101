@@ -1,6 +1,7 @@
 = WebExtensions 101
 
-A tiny workshop in creating a very small browser extension.
+A tiny workshop in creating a very small browser extension and an overview of
+possible features.
 
 == Building
 
