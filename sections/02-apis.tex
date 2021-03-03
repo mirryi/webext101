@@ -307,6 +307,28 @@ browser.menus.onClicked.addListener((info, tab) => {
   \end{lstlisting}
 \end{frame}
 
+% ---------------------------
+\renewcommand{\currenttitle}{Other APIs}
+\begin{frame}[fragile]{\currenttitle}
+  You can find a complete listing of the WebExtension APIs on the MDN
+  docs\footnotemark{} \\[1em]
+
+  Notable ones:
+  \begin{itemize}
+    \footnotesize
+    \item \texttt{bookmarks} \textendash{} Read and modify bookmarks
+    \item \texttt{cookies} \textendash{} Read and modify cookies
+    \item \texttt{notifications} \textendash{} Display notifications to the
+          user
+    \item \texttt{pageAction} \textendash{} Create a clickable icon for the
+          extension in the address bar
+    \item \texttt{tabs} \textendash{} Interact with open or current tabs
+    \item \texttt{windows} \textendash{} Open, close, activate browser windows
+  \end{itemize}
+
+  \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API\#javascript_api_listing}}
+\end{frame}
+
 % -----------------------------------------------
 
 \end{document}
