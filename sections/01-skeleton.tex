@@ -14,7 +14,7 @@
 % ---------------------------
 \renewcommand{\currenttitle}{File structure}
 \begin{frame}[fragile]{\currenttitle}
-  An basic extension typically looks something like this: 
+  An basic extension typically looks something like this:
 
   \begin{forest}
       for tree={
@@ -105,6 +105,16 @@
 \begin{frame}[fragile]{\currenttitle}
   \textbf{Content scripts} are \textbf{injected} into web pages and run in the
   context of a particular web page
+
+  They\dots
+  \begin{itemize}
+    \item are loaded when the page is loaded
+    \item \textbf{can} read and modify the contents of the webpage
+    \item \textbf{can} use a small subset of WebExtension APIs
+    \item \textbf{cannot} access browser storage and other APIs
+    \item \textbf{are blocked} on certain pages as dictated by the browser
+    \item \textbf{must} use the messaging API to communicate with background scripts
+  \end{itemize}
 \end{frame}
 
 % ---------------------------
@@ -184,6 +194,41 @@
     \item Click the reload icon in the bottom right corner of the extension
           card
   \end{enumerate}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Background scripts}
+\begin{frame}{\currenttitle}
+  Background scripts are loaded as soon as the extension is loaded and can be
+  used to maintain persistent state. \\[1em]
+
+  They\dots
+  \begin{itemize}
+    \item \textbf{can} use any of the WebExtension APIs (as long as permissions
+          are granted)
+    \item \textbf{cannot} access the content of web pages
+  \end{itemize}
+
+  Mostly out of scope for today.
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Other assets}
+\begin{frame}[fragile]{\currenttitle}
+  We can include other assets (images, stylesheets, etc.) in our extension and
+  load them from content scripts or page scripts.
+
+  In \texttt{manifest.json}:
+  \begin{lstlisting}[language=json]
+    "web_accessible_resources": ["images/my-image.png"]
+  \end{lstlisting}
+
+  In a script:
+  \begin{lstlisting}[language=ES6]
+    browser.runtime.getURL("images/my-image.png")
+  \end{lstlisting}
+
+  See \href{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/web_accessible_resources}{MDN docs}.
 \end{frame}
 
 % -----------------------------------------------

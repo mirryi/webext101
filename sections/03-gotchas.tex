@@ -1,0 +1,30 @@
+% -----------------------------------------------
+% chktex-file 44
+\documentclass[../index.tex]{subfiles}
+
+% -----------------------------------------------
+
+\begin{document}
+
+% -----------------------------------------------
+
+\renewcommand{\sectiontitle}{Web development is a gotcha minefield}
+\section{\sectiontitle}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Gotcha \#1: Browser incompatibilities}
+\begin{frame}[fragile]{\currenttitle}
+  Different browsers often support different sets of APIs, not just for
+  WebExtensions: \\[2em]
+
+  See:
+  \begin{itemize}
+    \item \href{https://caniuse.com/}{caniuse.com}
+    \item \href{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_support_for_JavaScript_APIs}
+               {WebExtensions API support}
+  \end{itemize}
+\end{frame}
+
+% -----------------------------------------------
+
+\end{document}

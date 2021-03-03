@@ -1,0 +1,35 @@
+% -----------------------------------------------
+% chktex-file 44
+\documentclass[../index.tex]{subfiles}
+
+% -----------------------------------------------
+
+\begin{document}
+
+% -----------------------------------------------
+
+\renewcommand{\sectiontitle}{Useful WebExtensions APIs}
+\section{\sectiontitle}
+
+% ---------------------------
+\renewcommand{\currenttitle}{The \texttt{browser} namespace}
+\begin{frame}[fragile]{\currenttitle}
+  WebExtensions APIs can be accessed using the \texttt{browser} namespace
+  (Firefox + Edge) and \texttt{chrome} namespace (Firefox + Chrome): \\[1em]
+
+  \begin{lstlisting}[language=ES6,basicstyle=\ttfamily\small]
+browser.tabs.query({currentWindow: true}, 
+                   console.log)
+  \end{lstlisting}
+
+  \vspace*{2em}
+
+  You can also use a \textbf{polyfill} to use \texttt{browser} across all
+  browsers:
+  \href{https://github.com/mozilla/webextension-polyfill}
+       {WebExtension API Polyfill}
+\end{frame}
+
+% -----------------------------------------------
+
+\end{document}
