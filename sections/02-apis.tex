@@ -16,7 +16,7 @@
 \renewcommand{\currenttitle}{Permissions}
 \begin{frame}[fragile]{\currenttitle}
   Before using any APIs, extensions must \textit{explicitly} specify which APIs
-  it wants to use \\[1em]
+  it wants to use by request \textbf{permissions}\footnotemark \\[1em]
 
   We do this in \texttt{manifest.json}:
   \begin{lstlisting}[language=json]
@@ -27,42 +27,47 @@
 }
   \end{lstlisting}
 
-  \vspace*{1em}
   The browser can then warn the user at installation time about any potentially
   intrusive behavior.
+
+  \footnotetext{\scriptsize \url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/permissions}}
 \end{frame}
 
 
 % ---------------------------
 \renewcommand{\currenttitle}{The \texttt{browser} namespace}
 \begin{frame}[fragile]{\currenttitle}
-  WebExtensions APIs can be accessed using the \texttt{browser} namespace
-  (Firefox + Edge) and \texttt{chrome} namespace (Firefox + Chrome): \\[1em]
+  WebExtensions APIs\footnotemark{} can be accessed using the \texttt{browser} namespace
+  (Firefox) and \texttt{chrome} namespace (Firefox + Chrome): \\[1em]
 
   \begin{lstlisting}[language=ES6,basicstyle=\ttfamily\small]
 browser.tabs.query({currentWindow: true},
                    console.log)
   \end{lstlisting}
 
-  \vspace*{2em}
+  \vspace*{1em}
 
-  You can also use a \textbf{polyfill} to use \texttt{browser} across all
-  browsers:
-  \href{https://github.com/mozilla/webextension-polyfill}
-       {WebExtension API Polyfill}
+  \texttt{browser} is \texttt{Promise}-based, while \texttt{chrome} is
+  callback-based (we'll talk about this later).
+
+  We'll use \texttt{browser} in our examples.
+
+  \footnotetext{\scriptsize \url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API}}
 \end{frame}
 
 % ---------------------------
 \renewcommand{\currenttitle}{Persistent storage}
 \begin{frame}[fragile]{\currenttitle}
-  The \texttt{storage} API:
+  The \texttt{storage} API\footnotemark{}:
 
   \begin{itemize}
     \item \textbf{can} be used by background scripts
     \item \textbf{cannot} be used by content scripts
-    \item \textbf{is async} (\texttt{Promises})
+    \item \textbf{is async} (\texttt{Promises} on \texttt{browser}, callbacks on \texttt{chrome})
     \item \textbf{requires} the "storage" permission in \texttt{manifest.json}
   \end{itemize}
+
+  \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage}}
 \end{frame}
 
 % ---------------------------
@@ -78,6 +83,7 @@ browser.tabs.query({currentWindow: true},
 
   We can now save something to \textit{local} storage in a \textbf{background
   script}:
+
   \begin{lstlisting}[language=ES6]
 browser.storage.local.set()
     .then(() => console.log("Success!"), 
@@ -88,13 +94,16 @@ browser.storage.local.set()
 % ---------------------------
 \renewcommand{\currenttitle}{Content script-background script messaging}
 \begin{frame}[fragile]{\currenttitle}
-  The \texttt{browser.runtime} namespace provides messaging facilities for
-  content scripts and background scripts to communicate.
+  The \texttt{browser.runtime} namespace\footnotemark{} provides messaging facilities for
+  content scripts and background scripts to communicate. \\[1.5em]
 
-  We can use \textbf{one-off messaging} or \textbf{connection-based messaging}
-  (see
-  \href{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts#choosing_between_one-off_messages_and_connection-based_messaging}{here}
-  to see when you should choose each)
+  \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime}}
+
+  We can use \textbf{one-off messaging} or \textbf{connection-based messaging}.
+
+  See MDN docs\footnotemark{} for more detailed info and when to choose each.
+
+  \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts#communicating_with_background_scripts}}
 \end{frame}
 
 % ---------------------------
@@ -231,8 +240,8 @@ document.body.addEventListener("click", function() {
 % ---------------------------
 \renewcommand{\currenttitle}{Modifying context menus}
 \begin{frame}[fragile]{\currenttitle}
-  We can add items to the right-click context menu with the \texttt{menus} API.
-  \\[1em]
+  We can add items to the right-click context menu with the \texttt{menus}
+  API\footnotemark{}.  \\[1em]
 
   This requires the "menus" permission:
   \begin{lstlisting}[language=json]
@@ -242,6 +251,8 @@ document.body.addEventListener("click", function() {
   ...
 }
   \end{lstlisting}
+
+  \footnotemark{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus}}
 \end{frame}
 
 % ---------------------------

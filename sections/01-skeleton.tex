@@ -53,48 +53,48 @@
 % ---------------------------
 \renewcommand{\currenttitle}{The manifest}
 \begin{frame}[fragile]{\currenttitle}
-  Every extension must have a \texttt{manifest.json} file that tells the
+  Every extension must have a \texttt{manifest.json}\footnotemark{} file that tells the
   browser what assets to load and other settings:
 
-  \begin{lstlisting}[language=json]
+  \begin{lstlisting}[language=json,basicstyle=\ttfamily\scriptsize]
 {
   "manifest_version": 2,
   "name": "Extension name",
   "version": "1.0",
   "description": "Description of the extension's functionality",
-  "content_scripts": [
-    {
-      "matches": ["://*.mozilla.org/*"],
-      "js": ["fg/index.js"]
-    }
-  ],
+  "content_scripts": [{
+    "matches": ["://*.mozilla.org/*"],
+    "js": ["fg/index.js"]
+  }],
   "background": {
     "scripts": ["bg/index.js", "lib/jquery.js"]
   }
 }
   \end{lstlisting}
+
+  \footnotetext{\scriptsize \url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json}}
 \end{frame}
 
 % ---------------------------
 \renewcommand{\currenttitle}{Let's create a manifest}
 \begin{frame}[fragile]{\currenttitle}
   Create the file \texttt{/manifest.json} and add:
-  \lstinputlisting{\emojisubdir/manifest.json}
+  \lstinputlisting[language=json,basicstyle=\ttfamily\scriptsize]{\emojisubdir/manifest.json}
 \end{frame}
 
 % ---------------------------
 \renewcommand{\currenttitle}{Let's create a manifest: breaking it down}
 \begin{frame}[fragile]{\currenttitle}
   Some standard metadata:
-  \lstinputlisting[firstline=3,lastline=5]{\emojisubdir/manifest.json}
+  \lstinputlisting[language=json,firstline=3,lastline=5]{\emojisubdir/manifest.json}
 
   Set the extension icon:
-  \lstinputlisting[firstline=6,lastline=9]{\emojisubdir/manifest.json}
+  \lstinputlisting[language=json,firstline=6,lastline=9]{\emojisubdir/manifest.json}
 \end{frame}
 
 \begin{frame}[fragile]{\currenttitle}
   Define the content scripts:
-  \lstinputlisting[firstline=10,lastline=15]{\emojisubdir/manifest.json}
+  \lstinputlisting[language=json,firstline=10,lastline=15]{\emojisubdir/manifest.json}
 
   We'll start with using \texttt{index.js}, but \texttt{emojimap.js} will be
   useful later.
@@ -103,11 +103,12 @@
 % ---------------------------
 \renewcommand{\currenttitle}{Content scripts}
 \begin{frame}[fragile]{\currenttitle}
-  \textbf{Content scripts} are \textbf{injected} into web pages and run in the
+  \textbf{Content scripts}\footnotemark{} are \textbf{injected} into web pages and run in the
   context of a particular web page
 
   They\dots
   \begin{itemize}
+    \small
     \item are loaded when the page is loaded
     \item \textbf{can} read and modify the contents of the webpage
     \item \textbf{can} use a small subset of WebExtension APIs
@@ -115,6 +116,8 @@
     \item \textbf{are blocked} on certain pages as dictated by the browser
     \item \textbf{must} use the messaging API to communicate with background scripts
   \end{itemize}
+
+  \footnotetext{\scriptsize \url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts}}
 \end{frame}
 
 % ---------------------------
@@ -133,6 +136,7 @@
 \begin{frame}[fragile]{\currenttitle}
   \textbf{Firefox (the better browser)}:
   \begin{enumerate}
+    \small
     \item Navigate to \texttt{about:debugging} in the address bar
     \item Enter the "This Firefox" tab
     \item Click "Load Temporary Add-on..."
@@ -141,6 +145,7 @@
 
   \textbf{Chrome}:
   \begin{enumerate}
+    \small
     \item Three dots ($\vdots$) \textrightarrow "More tools" \textrightarrow
           "Extensions"
     \item Enable "Developer mode"
@@ -162,9 +167,12 @@
   \texttt{emojimap.js}:
 
   \begin{itemize}
-    \item \href{https://github.com/Dophin2009/webext101/blob/master/emojisub/js/emojimap.js}{\texttt{/js/emojimap.js}}
-    \item \href{https://github.com/Dophin2009/webext101/blob/master/emojisub/js/index.js}{\texttt{/js/index.js}}
+    \item \texttt{/js/emojimap.js}
+          \footnote{\scriptsize \url{https://github.com/Dophin2009/webext101/blob/master/emojisub/js/emojimap.js}}
+    \item \texttt{/js/index.js}
+          \footnote{\scriptsize \url{https://github.com/Dophin2009/webext101/blob/master/emojisub/js/index.js}}
   \end{itemize}
+
 \end{frame}
 
 % ---------------------------
@@ -174,11 +182,13 @@
   \begin{itemize}
     \item Variables are shared across scripts (as with plain JS)
     \item Content scripts can modify the contents of the web page
-    \item A \texttt{MutationObserver} is useful for applying changes across the
+    \item A \texttt{MutationObserver}\footnotemark{} is useful for applying changes across the
           page at all times
     \item We can use rather modern JS because the browser supports it (also a
           gotcha)
   \end{itemize}
+
+  \footnotetext{\scriptsize \url{https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver}}
 \end{frame}
 
 % ---------------------------
@@ -199,7 +209,7 @@
 % ---------------------------
 \renewcommand{\currenttitle}{Background scripts}
 \begin{frame}{\currenttitle}
-  Background scripts are loaded as soon as the extension is loaded and can be
+  \textbf{Background scripts}\footnotemark{} are loaded as soon as the extension is loaded and can be
   used to maintain persistent state. \\[1em]
 
   They\dots
@@ -209,7 +219,7 @@
     \item \textbf{cannot} access the content of web pages
   \end{itemize}
 
-  Mostly out of scope for today.
+  \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Anatomy_of_a_WebExtension#background_scripts}}
 \end{frame}
 
 % ---------------------------
@@ -228,7 +238,9 @@
     browser.runtime.getURL("images/my-image.png")
   \end{lstlisting}
 
-  See \href{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/web_accessible_resources}{MDN docs}.
+  See MDN docs\footnotemark{} for more info.
+  
+  \footnotetext{\scriptsize \url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/web_accessible_resources}}
 \end{frame}
 
 % -----------------------------------------------

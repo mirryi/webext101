@@ -19,10 +19,95 @@
 
   See:
   \begin{itemize}
-    \item \href{https://caniuse.com/}{caniuse.com}
-    \item \href{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_support_for_JavaScript_APIs}
-               {WebExtensions API support}
+    \item Can I Use for JS, HTML, CSS, etc. support across browsers
+          \footnote{\scriptsize \url{https://caniuse.com/}}
+    \item WebExtensions API support in various browsers
+          \footnote{\scriptsize \url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_support_for_JavaScript_APIs}}
   \end{itemize}
+
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  Remember namespaces:
+  \begin{itemize}
+    \item Firefox \textendash{} \texttt{browser} namspace ;
+          \texttt{Promise}-based (modern and maintainable)
+    \item Chrome and co. \textendash{} \texttt{chrome} namspace ;
+          callback-based (old and error-prone)
+    \item Edge \textendash{} \texttt{browser} namespace ;
+          callback-based (Edge sucks)
+  \end{itemize}
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  \begin{lstlisting}[language=ES6]
+// In Chrome
+function logCookie(c) {
+  if (chrome.runtime.lastError) {
+    console.error(chrome.runtime.lastError);
+  } else {
+    console.log(c);
+  }
+}
+
+// We pass the function `logCookie` as a callback into 
+// `cookies.set` to deal with the return value.
+chrome.cookies.set(
+  {url: "https://developer.mozilla.org/"},
+  logCookie
+);
+  \end{lstlisting}
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  \begin{lstlisting}[language=ES6]
+// The same code in Firefox
+function logCookie(c) {
+  console.log(c);
+}
+
+function logError(e) {
+  console.error(e);
+}
+
+// `cookies.set` returns a `Promise`, and we call the
+// `then` method to deal with the value.
+let setCookie = browser.cookies.set(
+  {url: "https://developer.mozilla.org/"}
+);
+setCookie.then(logCookie, logError);
+  \end{lstlisting}
+\end{frame}
+
+% ---------------------------
+\newcommand{\promisesfootnote}{\footnote{\url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise}}}
+\newcommand{\asyncfootnote}{\footnote{\url{https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await}}}
+\newcommand{\polyfillfootnote}{\footnote{\url{https://github.com/mozilla/webextension-polyfill}}}
+\begin{frame}[fragile]{\currenttitle}
+  \textbf{Solution}: Learn the differences and deal with them \\[1em]
+
+  \textbf{Better solution}: Learn \texttt{Promise}s\promisesfootnote{}
+  and \texttt{async}/\texttt{await}\asyncfootnote{}
+  and use Mozilla's \texttt{webextension-polyfill}\polyfillfootnote{}
+  to use \texttt{browser} and \texttt{Promise}s everywhere
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Gotcha \#2: Manifest keys}
+\begin{frame}[fragile]{\currenttitle}
+  Beware:
+  \begin{itemize}
+    \item Some browsers may not support certain keys\footnotemark{} (e.g. Edge does not
+          support \texttt{commands} key)
+          \footnotetext{\url{https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json#browser_compatibility}}
+    \item Some browsers may require some settings in the \texttt{"browser\_specific\_settings"} field
+  \end{itemize}
+
+  \vspace*{1em}
+  \textbf{Solution}: Reading Is Fundamental
 \end{frame}
 
 % -----------------------------------------------
