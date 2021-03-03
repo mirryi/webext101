@@ -8,9 +8,35 @@
 
 % -----------------------------------------------
 
-\renewcommand{\currenttitle}{Example slide}
+\renewcommand{\currenttitle}{Contents}
 \begin{frame}{\currenttitle}
-  Slide contents!
+  We will be going over:
+  \begin{enumerate}
+    \item The skeleton of an extension
+    \item An overview of WebExtension APIs
+    \item Extension permissions and other gotchas
+    \item Building a toy extension
+    \item More advanced tooling
+  \end{enumerate}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{What we're making}
+\begin{frame}[fragile]{\currenttitle}
+  We'll be making the emoji substitution extension, taken from Mozilla's
+  examples.
+
+  \begin{itemize}
+    \item Replace words that describe emojis with their actual emojis
+    \item Make use of content scripts
+  \end{itemize}
+
+  \\[2em]
+
+  \textbf{Before we begin:} \\
+  Create a new project directory called \texttt{emojisub} and be prepared to
+  work in there
+
 \end{frame}
 
 % -----------------------------------------------

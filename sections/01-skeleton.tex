@@ -1,0 +1,191 @@
+% -----------------------------------------------
+% chktex-file 44
+\documentclass[../index.tex]{subfiles}
+
+% -----------------------------------------------
+
+\begin{document}
+
+% -----------------------------------------------
+
+\renewcommand{\sectiontitle}{Skeleton of an extension}
+\section{\sectiontitle}
+
+% ---------------------------
+\renewcommand{\currenttitle}{File structure}
+\begin{frame}[fragile]{\currenttitle}
+  An basic extension typically looks something like this: 
+
+  \begin{forest}
+      for tree={
+        font=\ttfamily\footnotesize,
+        grow'=0,
+        child anchor=west,
+        parent anchor=south,
+        anchor=west,
+        calign=first,
+        edge path={
+          \noexpand\path [draw, \forestoption{edge}]
+          (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+        },
+        before typesetting nodes={
+          if n=1
+            {insert before={[,phantom]}}
+            {}
+        },
+        fit=band,
+        before computing xy={l=15pt},
+      }
+    [root
+      [fg
+        [content-script-1.js]
+        [content-script-2.js]
+      ]
+      [bg
+        [script-1.js]
+        [script-2.js]
+      ]
+      [manifest.json]
+    ]
+  \end{forest}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{The manifest}
+\begin{frame}[fragile]{\currenttitle}
+  Every extension must have a \texttt{manifest.json} file that tells the
+  browser what assets to load and other settings:
+
+  \begin{lstlisting}[language=json]
+{
+  "manifest_version": 2,
+  "name": "Extension name",
+  "version": "1.0",
+  "description": "Description of the extension's functionality",
+  "content_scripts": [
+    {
+      "matches": ["://*.mozilla.org/*"],
+      "js": ["fg/index.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["bg/index.js", "lib/jquery.js"]
+  }
+}
+  \end{lstlisting}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Let's create a manifest}
+\begin{frame}[fragile]{\currenttitle}
+  Create the file \texttt{/manifest.json} and add:
+  \lstinputlisting{\emojisubdir/manifest.json}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Let's create a manifest: breaking it down}
+\begin{frame}[fragile]{\currenttitle}
+  Some standard metadata:
+  \lstinputlisting[firstline=3,lastline=5]{\emojisubdir/manifest.json}
+
+  Set the extension icon:
+  \lstinputlisting[firstline=6,lastline=9]{\emojisubdir/manifest.json}
+\end{frame}
+
+\begin{frame}[fragile]{\currenttitle}
+  Define the content scripts:
+  \lstinputlisting[firstline=10,lastline=15]{\emojisubdir/manifest.json}
+
+  We'll start with using \texttt{index.js}, but \texttt{emojimap.js} will be
+  useful later.
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Content scripts}
+\begin{frame}[fragile]{\currenttitle}
+  \textbf{Content scripts} are \textbf{injected} into web pages and run in the
+  context of a particular web page
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Hello, World! in content scripts}
+\begin{frame}[fragile]{\currenttitle}
+  Create the folder \texttt{/js} and the file \texttt{/js/emojimap.js} (for later use) \\[1.5em]
+
+  Create the file \texttt{/js/index.js} with a standard Hello, World! program:
+  \begin{lstlisting}[language=ES6,basicstyle=\ttfamily\small]
+    console.log("Hello, world!");
+  \end{lstlisting}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Let's test it!}
+\begin{frame}[fragile]{\currenttitle}
+  \textbf{Firefox (the better browser)}:
+  \begin{enumerate}
+    \item Navigate to \texttt{about:debugging} in the address bar
+    \item Enter the "This Firefox" tab
+    \item Click "Load Temporary Add-on..."
+    \item Select the \texttt{emojisub} folder
+  \end{enumerate}
+
+  \textbf{Chrome}:
+  \begin{enumerate}
+    \item Three dots ($\vdots$) \textrightarrow "More tools" \textrightarrow
+          "Extensions"
+    \item Enable "Developer mode"
+    \item Click "Load unpacked"
+    \item Select the \texttt{emojisub} folder
+  \end{enumerate}
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  Open a page (e.g. \texttt{duckduckgo.com}) and see if the console prints
+  "Hello, world!"
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Implementing the actual extension}
+\begin{frame}[fragile]{\currenttitle}
+  For simplicity's sake, just copy the code into \texttt{index.js} and
+  \texttt{emojimap.js}:
+
+  \begin{itemize}
+    \item \href{https://github.com/Dophin2009/webext101/blob/master/emojisub/js/emojimap.js}{\texttt{/js/emojimap.js}}
+    \item \href{https://github.com/Dophin2009/webext101/blob/master/emojisub/js/index.js}{\texttt{/js/index.js}}
+  \end{itemize}
+\end{frame}
+
+% ---------------------------
+\begin{frame}[fragile]{\currenttitle}
+  Notice a few things from a quick perusal of the code:
+
+  \begin{itemize}
+    \item Variables are shared across scripts (as with plain JS)
+    \item Content scripts can modify the contents of the web page
+    \item A \texttt{MutationObserver} is useful for applying changes across the
+          page at all times
+    \item We can use rather modern JS because the browser supports it (also a
+          gotcha)
+  \end{itemize}
+\end{frame}
+
+% ---------------------------
+\renewcommand{\currenttitle}{Let's retest}
+\begin{frame}{\currenttitle}
+  \textbf{Firefox}:
+  \begin{enumerate}
+    \item Click "Reload" in the bottom right corner of the extension card
+  \end{enumerate}
+
+  \textbf{Chrome}:
+  \begin{enumerate}
+    \item Click the reload icon in the bottom right corner of the extension
+          card
+  \end{enumerate}
+\end{frame}
+
+% -----------------------------------------------
+
+\end{document}
