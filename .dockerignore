@@ -2,8 +2,10 @@
 
 !include
 !sections
-!listings
 !index.tex
+
+!emojisub
+!template
 
 !latexmkrc
 

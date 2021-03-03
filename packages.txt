@@ -1,3 +1,5 @@
+babel
+babel-english
 beamer
 beamertheme-metropolis
 csquotes
