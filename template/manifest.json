@@ -10,5 +10,8 @@
       "matches": [],
       "js": ["js/index.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["bg/index.js"]
+  }
 }
