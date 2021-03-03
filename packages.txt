@@ -2,6 +2,7 @@ beamer
 beamertheme-metropolis
 csquotes
 fira
+forest
 hyperref
 listings
 pgfopts
